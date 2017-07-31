@@ -28,24 +28,26 @@ class Eye():
 
 
 
-def defineLearnbot(colour,size):
-    L_eye = Eye()
-    colour = L_eye.setEyecolor('#4192D9')
-    L_eye.setEyeSize(60, 80, 180, 240)
-    size = [ L_eye.getEyeSize()[0],L_eye.getEyeSize()[1],L_eye.getEyeSize()[2],L_eye.getEyeSize()[3]]
-    print colour
-    print size[2]
+
 
 class paintLearnbot(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
-        #defineLearnbot(colour,size)
+        L_eye = Eye()
+        L_eye.setEyecolor('#4192D9')
+        L_eye.setEyeSize(60, 80, 180, 240)
+        R_eye = Eye()
+        R_eye.setEyecolor('#4192D9')
+        R_eye.setEyeSize(300, 80, 420, 240)
+        colourL = L_eye.getEyecolor()
+        sizeL = [L_eye.getEyeSize()[0], L_eye.getEyeSize()[1], L_eye.getEyeSize()[2], L_eye.getEyeSize()[3]]
+        colourR = R_eye.getEyecolor()
+        sizeR = [R_eye.getEyeSize()[0], R_eye.getEyeSize()[1], R_eye.getEyeSize()[2], R_eye.getEyeSize()[3]]
 
         self.canvas = tk.Canvas(width=480, height=320, background='black')
         self.canvas.pack()
-
-        #lEye.getEyeSize(x1, y1, x2, y2)
-        #self.eye = self.canvas.create_oval(x1, y1, x2, y2, outline='#4192D9', fill="#4192D9")
+        self.eye = self.canvas.create_oval(sizeL[0], sizeL[1], sizeL[2], sizeL[3], outline=colourL, fill=colourL)
+        self.eye = self.canvas.create_oval(sizeR[0], sizeR[1], sizeR[2], sizeR[3], outline=colourR, fill=colourR)
 
 
 
