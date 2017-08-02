@@ -1,170 +1,20 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from __future__ import print_function
 import Tkinter as tk
 import time, math
 
-
-class BaseHead(object):
-	def __init__(self):
-		self.colour = "blue"
-		self.size = None
-
-	def set_colour(self, colour):
-		self.colour = colour
-
-	def set_size(self, x0, y0, x1, y1):
-		self.size = [x0, y0, x1, y1]
-
-	def get_colour(self):
-		return self.colour
-
-	def get_size(self):
-		return self.size
-
-
-class Eye(BaseHead):
-	def __init__(self):
-		BaseHead.__init__(self)
-
-class EyeLid(BaseHead):
-	def __init__(self):
-		BaseHead.__init__(self)
-
-class EyeBrow(BaseHead):
-	def __init__(self):
-		BaseHead.__init__(self)
-
-class Mouth(BaseHead):
-	def __init__(self):
-		BaseHead.__init__(self)
-
-
-class Face():
-	def __init__(self):
-		self.left_eye = Eye()
-		self.right_eye = Eye()
-		self.left_eyebrow = EyeBrow()
-		self.right_eyebrow = EyeBrow()
-		self.eyelids = None
-		self.mouth = Mouth()
-
-	def set_eye(self, eye, position):
-		if position == "left":
-			self.left_eye = eye
-		elif position == "right":
-			self.right_eye = eye
-		else:
-			print("ERROR: Position eye set")
-			exit()
-
-	def get_eye(self, position):
-		if position == "left":
-			return self.left_eye
-		elif position == "right":
-			return self.right_eye
-		else:
-			print("ERROR: Position eye get")
-			exit()
-
-	def set_eyebrow(self, eyebrow, position):
-		if position == "left":
-			self.left_eyebrow = eyebrow
-		elif position == "right":
-			self.right_eyebrow = eyebrow
-		else:
-			print("ERROR: Position eyebrow set")
-			exit()
-
-	def get_eyebrow(self, position):
-		if position == "left":
-			return self.left_eyebrow
-		elif position == "right":
-			return self.right_eyebrow
-		else:
-			print("ERROR: Position eyebrow get")
-			exit()
-
-	def set_eyelids(self, lu_eyeLid, ld_eyeLid, ru_eyeLid, rd_eyeLid):
-		self.eyelids = [lu_eyeLid, ld_eyeLid, ru_eyeLid, rd_eyeLid]
-
-	def get_eyelids(self):
-		return self.eyelids
+import headrobot
 
 
 
-class DefiningLearnbot(tk.Tk):
-	def __init__(self):
-		self.face = Face()
-		self.draw_eyelid = [None, None, None, None]
-
-		# Defining Eyes
-		L_eye = Eye()
-		L_eye.set_colour('#4192D9')
-		L_eye.set_size(60, 80, 180, 240)
-		self.face.set_l_eye(L_eye)
-
-		R_eye = Eye()
-		R_eye.set_colour('#4192D9')
-		R_eye.set_size(300, 80, 420, 240)
-		self.face.set_r_eye(R_eye)
-
-		# Defining Eyelid
-		Lu_eyeLid = EyeLid()
-		Lu_eyeLid.set_colour('black')
-		Lu_eyeLid.set_size(40, 0, 200, 80)
-
-		Ld_eyeLid = EyeLid()
-		Ld_eyeLid.set_colour('black')
-		Ld_eyeLid.set_size(40, 240, 200, 320)
-
-		Ru_eyeLid = EyeLid()
-		Ru_eyeLid.set_colour('black')
-		Ru_eyeLid.set_size(280, 0, 440, 80)
-
-		Rd_eyeLid = EyeLid()
-		Rd_eyeLid.set_colour('black')
-		Rd_eyeLid.set_size(280, 240, 440, 320)
-
-		self.face.set_eyelids(Lu_eyeLid, Ld_eyeLid, Ru_eyeLid, Rd_eyeLid)
-
-		# Simplifying
-		colourL = self.face.get_l_eye().get_colour()
-		sizeL = self.face.get_l_eye().get_size()
-		colourR = self.face.get_r_eye().get_colour()
-		sizeR = self.face.get_r_eye().get_size()
-
-		colour_lue = self.face.get_eyelids()[0].get_colour()
-		colour_lde = self.face.get_eyelids()[1].get_colour()
-		colour_rue = self.face.get_eyelids()[2].get_colour()
-		colour_rde = self.face.get_eyelids()[3].get_colour()
-		size_lue = self.face.get_eyelids()[0].get_size()
-		size_lde = self.face.get_eyelids()[1].get_size()
-		size_rue = self.face.get_eyelids()[2].get_size()
-		size_rde = self.face.get_eyelids()[3].get_size()
-
-		# Drawing
-		self.canvas = tk.Canvas(width=480, height=320, background='black')
-		self.canvas.pack()
-		eye = self.canvas.create_oval(sizeL[0], sizeL[1], sizeL[2], sizeL[3], outline=colourL, fill=colourL)
-		eye = self.canvas.create_oval(sizeR[0], sizeR[1], sizeR[2], sizeR[3], outline=colourR, fill=colourR)
-
-		self.draw_eyelid[0] = self.canvas.create_rectangle(size_lue[0], size_lue[1], size_lue[2], size_lue[3],
-														outline=colour_lue,
-														fill=colour_lue)
-		self.draw_eyelid[1] = self.canvas.create_rectangle(size_lde[0], size_lde[1], size_lde[2], size_lde[3],
-														outline=colour_lde,
-														fill=colour_lde)
-		self.draw_eyelid[2] = self.canvas.create_rectangle(size_rue[0], size_rue[1], size_rue[2], size_rue[3],
-														outline=colour_rue,
-														fill=colour_rue)
-		self.draw_eyelid[3] = self.canvas.create_rectangle(size_rde[0], size_rde[1], size_rde[2], size_rde[3],
-														outline=colour_rde,
-														fill=colour_rde)
 
 
 class Status(tk.Tk):
 	def __init__(self, *args, **kwargs):
 		tk.Tk.__init__(self, *args, **kwargs)
 		self.state = None
-		self.paint = DefiningLearnbot()
+		self.paint = headrobot.DefiningLearnbot()
 
 	def setStatus(self, status):
 		self.status = status
