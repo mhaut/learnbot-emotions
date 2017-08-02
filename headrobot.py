@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 import Tkinter as tk
+import time
+
 
 class BaseHead(object):
 	def __init__(self):
@@ -26,13 +28,13 @@ class Eye(BaseHead):
 		BaseHead.__init__(self)
 
 class Pupil(BaseHead):
-    def __init__(self):
-        BaseHead.__init__(self)
-        self.reflex = Pupil_reflex()
+	def __init__(self):
+		BaseHead.__init__(self)
+		self.reflex = Pupil_reflex()
 
 class Pupil_reflex(BaseHead):
-    def __init__(self):
-        BaseHead.__init__(self)
+	def __init__(self):
+		BaseHead.__init__(self)
 
 class EyeLid(BaseHead):
 	def __init__(self):
@@ -54,6 +56,26 @@ class Face():
 		self.right_eyebrow = EyeBrow()
 		self.eyelids = [EyeLid(), EyeLid(), EyeLid(), EyeLid()]
 		self.mouth = Mouth()
+		self.status = "neutral"
+
+		draw_eyelid = [None, None, None, None]
+
+		for eye, size_eye in zip(self.eyes, [[60, 80, 180, 240], [300, 80, 420, 240]]):
+			eye.set_colour('#4192D9')
+			eye.set_size(size_eye)
+
+		for eyelid, size_eyelid in zip(self.eyelids, [[40, 0, 200, 80], [40, 240, 200, 320], [280, 0, 440, 80], [280, 240, 440, 320]]):
+			eyelid.set_colour('black')
+			eyelid.set_size(size_eyelid)
+
+		self.canvas = tk.Canvas(width=480, height=320, background='black')
+		self.canvas.pack()
+		eye_left = self.canvas.create_oval(self.get_eye("left").get_size(), outline=self.get_eye("left").get_colour(), fill=self.get_eye("left").get_colour())
+		eye_right = self.canvas.create_oval(self.get_eye("right").get_size(), outline=self.get_eye("right").get_colour(), fill=self.get_eye("right").get_colour())
+		for eyelid in self.eyelids:
+			eyelid = self.canvas.create_rectangle(eyelid.get_size(), outline="black", fill="black")
+
+
 
 	def set_eye(self, eye, position):
 		if position == "left":
@@ -99,45 +121,113 @@ class Face():
 
 
 
+	def change_status(self, status):
+		self.status = status
+		if self.status == 'happiness':
+			circlehappy1 = self.canvas.create_oval(20, 240, 220, 440, fill="black")
+			circlehappy2 = self.canvas.create_oval(260, 240, 460, 440, fill="black")
+			x = 0
+			y = 2.3
+			for i in range(0, 51):
+				time.sleep(0.01)
+				self.canvas.move(circlehappy1, x, -y)
+				self.canvas.move(circlehappy2, x, -y)
+				self.canvas.update()
+			time.sleep(0.1)
+		elif self.status == 'angry':
+			xy = [(60.2, -94.48), (218.16, -36.08), (188.96, 38.4), (40, -20)]
+			angryUle = self.canvas.create_polygon(xy, fill="black")  # Up|Left  eyelid
+			xy2 = [(291.04, 38.4), (440, -20), (410.8, -94.48), (261.84, -36.08)]
+			angryUre = self.canvas.create_polygon(xy2, fill="black")  # Up|Right  eyelid
+			angryDle = self.canvas.create_rectangle(40, 320, 200, 400, fill="black")  # Down|Left  eyelid
+			angryDre = self.canvas.create_rectangle(280, 320, 440, 400, fill="black")  # Down|Right eyelid
+			x = 0
+			y = 2.3
+			for i in range(0, 51):
+				time.sleep(0.01)
+				self.canvas.move(angryUle, x, y)
+				self.canvas.move(angryUre, x, y)
+				self.canvas.move(angryDle, x, -y)
+				self.canvas.move(angryDre, x, -y)
+				self.canvas.update()
+
+			time.sleep(0.1)
+		elif self.status == 'sadness':
+			x = 0
+			y = 2
+			xy = [(11.04, 8.4), (160, -50), (189.2, 24.48), (40.24, 82.88)]
+			sadUle = self.canvas.create_polygon(xy, fill="black")  # Up|Left  eyelid
+			xy2 = [(320, -50), (468.96, 8.4), (439.76, 82.27), (290.8, 24.48)]
+			sadUre = self.canvas.create_polygon(xy2, fill="black")  # Up|Right  eyelid
+			for i in range(0, 51):
+				time.sleep(0.01)
+				self.canvas.move(sadUle, x, y)
+				self.canvas.move(sadUre, x, y)
+				self.canvas.update()
+			time.sleep(0.1)
+		else:#scared
+			x = 0
+			y = 1
+			circlescared1 = self.canvas.create_oval(-10, 240, 190, 440, fill="black")
+			circlescared2 = self.canvas.create_oval(290, 240, 490, 440, fill="black")
+			for i in range(0, 51):
+				time.sleep(0.01)
+				self.canvas.move(circlescared1, x, -y)
+				self.canvas.move(circlescared2, x, -y)
+				self.canvas.update()
+			time.sleep(0.1)
+		tk.after(1, self.change_status(status))
+
+	def parpadea(self):
+
+		track = 0
+		while True:
+			x = 0
+			y = 1.4
+
+			if track == 0:
+				for i in range(0, 51):
+					time.sleep(0.01)
+					self.canvas.move(self.draw_eyelid[0], x, y)
+					self.canvas.move(self.draw_eyelid[1], x, -y)
+					self.canvas.move(self.draw_eyelid[2], x, y)
+					self.canvas.move(self.draw_eyelid[3], x, -y)
+					self.canvas.update()
+				track = 1
+				time.sleep(0.1)
+
+			else:
+				for i in range(0, 51):
+					time.sleep(0.01)
+					self.canvas.move(self.draw_eyelid[0], x, -y)
+					self.canvas.move(self.draw_eyelid[1], x, y)
+					self.canvas.move(self.draw_eyelid[2], x, -y)
+					self.canvas.move(self.draw_eyelid[3], x, y)
+					self.canvas.update()
+				track = 0
+				time.sleep(4)
+		print ("fin")
+
 
 if __name__ == "__main__":
-	tk.Tk.__init__()
-	face = Face()
-	draw_eyelid = [None, None, None, None]
+	cara = Face()
+	time.sleep(3)
+	print("cambio a happiness")
+	cara.change_status("happiness")
+	cara.parpadea()
+	tk.mainloop()
 
-	for eye, size_eye in zip(face.eyes, [[60, 80, 180, 240], [300, 80, 420, 240]]):
-		eye.set_colour('#4192D9')
-		eye.set_size(size_eye)
+"""class App():
+	def __init__(self):
+		self.root = tk.Tk()
+		self.label = tk.Label(text="")
+		self.label.pack()
+		self.update_clock()
+		self.root.mainloop()
 
-	for eyelid, size_eyelid in zip(face.eyelids, [[40, 0, 200, 80], [40, 240, 200, 320], [280, 0, 440, 80], [280, 240, 440, 320]]):
-		eyelid.set_colour('black')
-		eyelid.set_size(size_eyelid)
+	def update_clock(self):
+		now = time.strftime("%H:%M:%S")
+		self.label.configure(text=now)
+		self.root.after(1000, self.update_clock)
 
-	# Drawing
-	canvas = tk.Canvas(width=480, height=320, background='black')
-	canvas.pack()
-	eye_left = canvas.create_oval(face.get_eye("left").get_size(), outline=face.get_eye("left").get_colour(), fill=face.get_eye("left").get_colour())
-	eye_right = canvas.create_oval(face.get_eye("right").get_size(), outline=face.get_eye("right").get_colour(), fill=face.get_eye("right").get_colour())
-
-	colour_lue = face.get_eyelids()[0].get_colour()
-	colour_lde = face.get_eyelids()[1].get_colour()
-	colour_rue = face.get_eyelids()[2].get_colour()
-	colour_rde = face.get_eyelids()[3].get_colour()
-	size_lue = face.get_eyelids()[0].get_size()
-	size_lde = face.get_eyelids()[1].get_size()
-	size_rue = face.get_eyelids()[2].get_size()
-	size_rde = face.get_eyelids()[3].get_size()
-
-	draw_eyelid[0] = canvas.create_rectangle(size_lue[0], size_lue[1], size_lue[2], size_lue[3],
-													outline=colour_lue,
-													fill=colour_lue)
-	draw_eyelid[1] = canvas.create_rectangle(size_lde[0], size_lde[1], size_lde[2], size_lde[3],
-													outline=colour_lde,
-													fill=colour_lde)
-	draw_eyelid[2] = canvas.create_rectangle(size_rue[0], size_rue[1], size_rue[2], size_rue[3],
-													outline=colour_rue,
-													fill=colour_rue)
-	draw_eyelid[3] = canvas.create_rectangle(size_rde[0], size_rde[1], size_rde[2], size_rde[3],
-													outline=colour_rde,
-													fill=colour_rde)
-	print("fin")
+app=App()"""
