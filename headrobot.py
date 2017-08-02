@@ -50,7 +50,8 @@ class Mouth(BaseHead):
 
 
 class Face():
-	def __init__(self):
+	def __init__(self, window):
+		self.window = window
 		self.eyes = [Eye(), Eye()]
 		self.eyebrows = [EyeBrow(), EyeBrow()]
 		self.right_eyebrow = EyeBrow()
@@ -122,6 +123,7 @@ class Face():
 
 
 	def change_status(self, status):
+		print(self.status, "to", status)
 		self.status = status
 		if self.status == 'happiness':
 			circlehappy1 = self.canvas.create_oval(20, 240, 220, 440, fill="black")
@@ -176,10 +178,9 @@ class Face():
 				self.canvas.move(circlescared2, x, -y)
 				self.canvas.update()
 			time.sleep(0.1)
-		tk.after(1, self.change_status(status))
+		self.window.after(1, self.change_status("sadness"))
 
 	def parpadea(self):
-
 		track = 0
 		while True:
 			x = 0
@@ -210,12 +211,11 @@ class Face():
 
 
 if __name__ == "__main__":
-	cara = Face()
-	time.sleep(3)
-	print("cambio a happiness")
+	root = tk.Tk()
+	cara = Face(root)
 	cara.change_status("happiness")
 	cara.parpadea()
-	tk.mainloop()
+	root.mainloop()
 
 """class App():
 	def __init__(self):
