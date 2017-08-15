@@ -5,6 +5,7 @@ import Tkinter as tk
 import time
 
 
+
 class BaseHead(object):
     def __init__(self):
         self.colour = "blue"
@@ -249,7 +250,8 @@ class Face():
                     if KeyboardInterrupt:
                         change_state=False
                         status = raw_input("What is the status of Learnbot?")
-                        self.change_status(status)
+
+
     def end(self):
         tk.destroy()
         print("end")
@@ -260,6 +262,8 @@ if __name__ == "__main__":
     face = Face(root)
     status = raw_input("What is the status of Learnbot?")
     face.change_status(status)
+    root.attributes('-fullscreen',True)
+    root.bind("<Escape>", lambda e: root.quit())
     root.mainloop()
 
 """class App():
