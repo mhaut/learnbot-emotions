@@ -1,6 +1,8 @@
 import Tkinter as tk
 import time
 import load_json as paint
+import json
+#sudo pip install https://pypi.python.org/packages/source/g/getch/getch-1.0-python2.tar.gz#md5=586ea0f1f16aa094ff6a30736ba03c50
 import getch
 
 
@@ -123,27 +125,25 @@ class Face():
         self.tongue.set_colour(paint.checkPaint(name,paint.load_file(name))[35])
 
 
-        eye_l=self.canvas.create_polygon ( self.eyes[0].get_size(), fill=self.eyes[0].get_colour() )
-        eye_r=self.canvas.create_polygon ( self.eyes[1].get_size(), fill=self.eyes[1].get_colour() )
+        self.eye_l=self.canvas.create_polygon ( self.eyes[0].get_size(), fill=self.eyes[0].get_colour() )
+        self.eye_r=self.canvas.create_polygon ( self.eyes[1].get_size(), fill=self.eyes[1].get_colour() )
         self.eyelid_u_l=self.canvas.create_polygon(self.eyelid[0].get_size(), fill=self.eyelid[0].get_colour())
         self.eyelid_u_r=self.canvas.create_polygon(self.eyelid[1].get_size(), fill=self.eyelid[1].get_colour())
         self.eyelid_d_l=self.canvas.create_polygon(self.eyelid[2].get_size(), fill=self.eyelid[2].get_colour())
         self.eyelid_d_r=self.canvas.create_polygon(self.eyelid[3].get_size(), fill=self.eyelid[3].get_colour())
-        self.canvas.create_polygon ( self.iris[0].get_size(), fill=self.iris[0].get_colour() )
-        self.canvas.create_polygon ( self.iris[1].get_size(), fill=self.iris[1].get_colour() )
-        self.canvas.create_polygon ( self.pupil[0].get_size(), fill=self.pupil[1].get_colour() )
-        self.canvas.create_polygon ( self.pupil[1].get_size(), fill=self.pupil[1].get_colour() )
-        self.canvas.create_polygon ( self.pupil[0].brightness[0].get_size(),fill=self.pupil[0].brightness[0].get_colour() )
-        self.canvas.create_polygon ( self.pupil[0].brightness[1].get_size(),fill=self.pupil[0].brightness[1].get_colour() )
-        self.canvas.create_polygon ( self.pupil[1].brightness[0].get_size(),fill=self.pupil[0].brightness[0].get_colour())
-        self.canvas.create_polygon ( self.pupil[1].brightness[1].get_size(),fill=self.pupil[0].brightness[1].get_colour())
-        self.canvas.create_polygon ( self.eyebrow[0].get_size(),fill=self.eyebrow[0].get_colour()  )
-        self.canvas.create_polygon ( self.eyebrow[1].get_size(),fill=self.eyebrow[1].get_colour()  )
-        self.canvas.create_polygon ( self.mouth.get_size(),fill=self.mouth.get_colour() )
-        self.canvas.create_polygon ( self.tongue.get_size(),fill=self.tongue.get_colour() )
+        self.iris_l=self.canvas.create_polygon ( self.iris[0].get_size(), fill=self.iris[0].get_colour() )
+        self.iris_r=self.canvas.create_polygon ( self.iris[1].get_size(), fill=self.iris[1].get_colour() )
+        self.pupil_l=self.canvas.create_polygon ( self.pupil[0].get_size(), fill=self.pupil[1].get_colour() )
+        self.pupil_r=self.canvas.create_polygon ( self.pupil[1].get_size(), fill=self.pupil[1].get_colour() )
+        self.reflex_pupil_l=self.canvas.create_polygon ( self.pupil[0].brightness[0].get_size(),fill=self.pupil[0].brightness[0].get_colour() )
+        self.reflex_pupil_r=self.canvas.create_polygon ( self.pupil[0].brightness[1].get_size(),fill=self.pupil[0].brightness[1].get_colour() )
+        self.reflex_pupil_2_l=self.canvas.create_polygon ( self.pupil[1].brightness[0].get_size(),fill=self.pupil[0].brightness[0].get_colour())
+        self.reflex_pupil_2_r=self.canvas.create_polygon ( self.pupil[1].brightness[1].get_size(),fill=self.pupil[0].brightness[1].get_colour())
+        self.eyebrow_l=self.canvas.create_polygon ( self.eyebrow[0].get_size(),fill=self.eyebrow[0].get_colour()  )
+        self.eyebrow_r=self.canvas.create_polygon ( self.eyebrow[1].get_size(),fill=self.eyebrow[1].get_colour()  )
+        self.mouth_=self.canvas.create_polygon ( self.mouth.get_size(),fill=self.mouth.get_colour() )
+        self.tongue_=self.canvas.create_polygon ( self.tongue.get_size(),fill=self.tongue.get_colour() )
 
-
-    def change_status(self):
         print "You can change status by pressing"
         print " n    if you want the state to be neutral"
         print " a    if you want the state to be angry"
@@ -153,118 +153,227 @@ class Face():
         print " d    if you want the state to be disgust"
         print " By default the state is neutral"
 
-        track = 0
-        change_state = True
-        while change_state:
-            x = 0
-            y = 1.3
-            if track == 0:
+    def change_status(self):
+        print "entra change"
+
+        ending= False
+        while ending != True:
+            print "entra bucle"
+            track = 0
+            change_state = True
+            while change_state:
+                x = 0
+                y = 1.3
+                if track == 0:
+                    for i in range(0, 51):
+                        time.sleep(0.01)
+
+                        # print (self.eyelids[0].get_size())
+                        # self.canvas.move(self.eyelids[0], x,y)
+                        self.canvas.move(self.eyelid_u_l, x, y)
+                        self.canvas.move(self.eyelid_u_r, x, y)
+                        self.canvas.move(self.eyelid_d_l, x, -y)
+                        self.canvas.move(self.eyelid_d_r, x, -y)
+                        self.canvas.update()
+                    track = 1
+                    time.sleep(0.1)
+
+                else:
+                    for i in range(0, 51):
+                        time.sleep(0.01)
+                        self.canvas.move(self.eyelid_u_l, x, -y)
+                        self.canvas.move(self.eyelid_u_r, x, -y)
+                        self.canvas.move(self.eyelid_d_l, x, y)
+                        self.canvas.move(self.eyelid_d_r, x, y)
+                        self.canvas.update()
+                    track = 0
+                    time.sleep(3)
+                    char = getch.getch()
+                    if char == "a" or char == "h" or char == "s" or char=="x" or char == "d" or char == "n":
+                        change_state = False
+
+            raw_input(" ")
+            if char == "a":
+                print "angry"
+                self.eyelid[0].set_size(paint.checkPaint(name, paint.load_file(name))[36])
+                self.eyelid[1].set_size(paint.checkPaint(name, paint.load_file(name))[41])
+                self.eyebrow[0].set_size(paint.checkPaint(name, paint.load_file(name))[96])
+                self.eyebrow[1].set_size(paint.checkPaint(name, paint.load_file(name))[101])
+
+                self.canvas.delete(self.eyelid_u_l)
+                self.canvas.delete(self.eyelid_u_r)
+                self.canvas.delete(self.eyebrow_l)
+                self.canvas.delete(self.eyebrow_r)
+                self.eyelid_u_l = self.canvas.create_polygon(self.eyelid[0].get_size(), fill=self.eyelid[0].get_colour())
+                self.eyelid_u_r = self.canvas.create_polygon(self.eyelid[1].get_size(), fill=self.eyelid[1].get_colour())
+                self.eyebrow_l = self.canvas.create_polygon (self.eyebrow[0].get_size(),fill=self.eyebrow[0].get_colour())
+                self.eyebrow_r = self.canvas.create_polygon(self.eyebrow[1].get_size(), fill=self.eyebrow[1].get_colour())
+                time.sleep(0.2)
+                x = 0
+                y = 1.4
                 for i in range(0, 51):
                     time.sleep(0.01)
-
-                    # print (self.eyelids[0].get_size())
-                    # self.canvas.move(self.eyelids[0], x,y)
                     self.canvas.move(self.eyelid_u_l, x, y)
                     self.canvas.move(self.eyelid_u_r, x, y)
+                    self.canvas.move(self.eyebrow_l, x, y)
+                    self.canvas.move(self.eyebrow_r, x, y)
+                    self.canvas.update()
+                #time.sleep(1)
+                char = getch.getch()
+                if char == "a" or char == "h" or char == "s" or char == "x" or char == "d" or char == "n" or char=="q":
+                    self.canvas.delete(self.eyelid_u_l)
+                    self.canvas.delete(self.eyelid_u_r)
+                    self.canvas.delete(self.eyebrow_l)
+                    self.canvas.delete(self.eyebrow_r)
+                    self.eyelid[0].set_size(paint.checkPaint(name, paint.load_file(name))[4])
+                    self.eyelid[0].set_colour(paint.checkPaint(name, paint.load_file(name))[5])
+                    self.eyelid[1].set_size(paint.checkPaint(name, paint.load_file(name))[6])
+                    self.eyelid[1].set_colour(paint.checkPaint(name, paint.load_file(name))[7])
+                    self.eyebrow[0].set_size(paint.checkPaint(name, paint.load_file(name))[28])
+                    self.eyebrow[0].set_colour(paint.checkPaint(name, paint.load_file(name))[29])
+                    self.eyebrow[1].set_size(paint.checkPaint(name, paint.load_file(name))[30])
+                    self.eyebrow[1].set_colour(paint.checkPaint(name, paint.load_file(name))[31])
+
+                    self.eyelid_u_l = self.canvas.create_polygon(self.eyelid[0].get_size(),
+                                                                 fill=self.eyelid[0].get_colour())
+                    self.eyelid_u_r = self.canvas.create_polygon(self.eyelid[1].get_size(),
+                                                                 fill=self.eyelid[1].get_colour())
+                    self.eyebrow_l = self.canvas.create_polygon(self.eyebrow[0].get_size(),
+                                                                fill=self.eyebrow[0].get_colour())
+                    self.eyebrow_r = self.canvas.create_polygon(self.eyebrow[1].get_size(),
+                                                                fill=self.eyebrow[1].get_colour())
+                    time.sleep(3)
+
+
+
+            if char == "h":
+                print "happiness"
+                self.eyelid[2].set_size(paint.checkPaint(name, paint.load_file(name))[47])
+                self.eyelid[3].set_size(paint.checkPaint(name, paint.load_file(name))[52])
+                self.eyebrow[0].set_size(paint.checkPaint(name, paint.load_file(name))[97])
+                self.eyebrow[1].set_size(paint.checkPaint(name, paint.load_file(name))[102])
+                self.canvas.delete(self.eyelid_d_l)
+                self.canvas.delete(self.eyelid_d_r)
+                self.canvas.delete(self.eyebrow_l)
+                self.canvas.delete(self.eyebrow_r)
+                self.eyelid_d_l = self.canvas.create_polygon(self.eyelid[2].get_size(), fill=self.eyelid[0].get_colour())
+                self.eyelid_d_r = self.canvas.create_polygon(self.eyelid[3].get_size(), fill=self.eyelid[1].get_colour())
+                self.eyebrow_l = self.canvas.create_polygon (self.eyebrow[0].get_size(),fill=self.eyebrow[0].get_colour())
+                self.eyebrow_r = self.canvas.create_polygon(self.eyebrow[1].get_size(), fill=self.eyebrow[1].get_colour())
+                x = 0
+                y = 0.95
+                y2 = 0.2
+                for i in range(0, 51):
+                    time.sleep(0.02)
+                    self.canvas.move(self.eyelid_d_l, x, -y)
+                    self.canvas.move(self.eyelid_d_r, x, -y)
+                    self.canvas.move(self.eyebrow_l, x, -y2)
+                    self.canvas.move(self.eyebrow_r, x, -y2)
+                    self.canvas.update()
+                time.sleep(1)
+                char = getch.getch()
+                if char == "a" or char == "h" or char == "s" or char == "x" or char == "d" or char == "n" or char=="q":
+                    self.canvas.delete(self.eyelid_d_l)
+                    self.canvas.delete(self.eyelid_d_r)
+                    self.canvas.delete(self.eyebrow_l)
+                    self.canvas.delete(self.eyebrow_r)
+                    self.eyelid[2].set_size(paint.checkPaint(name, paint.load_file(name))[4])
+                    self.eyelid[2].set_colour(paint.checkPaint(name, paint.load_file(name))[5])
+                    self.eyelid[3].set_size(paint.checkPaint(name, paint.load_file(name))[6])
+                    self.eyelid[3].set_colour(paint.checkPaint(name, paint.load_file(name))[7])
+                    self.eyebrow[0].set_size(paint.checkPaint(name, paint.load_file(name))[28])
+                    self.eyebrow[0].set_colour(paint.checkPaint(name, paint.load_file(name))[29])
+                    self.eyebrow[1].set_size(paint.checkPaint(name, paint.load_file(name))[30])
+                    self.eyebrow[1].set_colour(paint.checkPaint(name, paint.load_file(name))[31])
+
+                    self.eyelid_d_l = self.canvas.create_polygon(self.eyelid[2].get_size(),
+                                                                 fill=self.eyelid[2].get_colour())
+                    self.eyelid_d_r = self.canvas.create_polygon(self.eyelid[3].get_size(),
+                                                                 fill=self.eyelid[3].get_colour())
+                    self.eyebrow_l = self.canvas.create_polygon(self.eyebrow[0].get_size(),
+                                                                fill=self.eyebrow[0].get_colour())
+                    self.eyebrow_r = self.canvas.create_polygon(self.eyebrow[1].get_size(),
+                                                                fill=self.eyebrow[1].get_colour())
+                    time.sleep(3)
+
+            if char == "s":
+                print "sadness"
+                self.eyelid[0].set_size(paint.checkPaint(name, paint.load_file(name))[38])
+                self.eyelid[1].set_size(paint.checkPaint(name, paint.load_file(name))[43])
+                self.eyebrow[0].set_size(paint.checkPaint(name, paint.load_file(name))[98])
+                self.eyebrow[1].set_size(paint.checkPaint(name, paint.load_file(name))[103])
+                self.canvas.delete(self.eyelid_u_l)
+                self.canvas.delete(self.eyelid_u_r)
+                self.canvas.delete(self.eyebrow_l)
+                self.canvas.delete(self.eyebrow_r)
+                self.eyelid_u_l = self.canvas.create_polygon(self.eyelid[0].get_size(), fill=self.eyelid[0].get_colour())
+                self.eyelid_u_r = self.canvas.create_polygon(self.eyelid[1].get_size(), fill=self.eyelid[1].get_colour())
+                self.eyebrow_l = self.canvas.create_polygon (self.eyebrow[0].get_size(),fill=self.eyebrow[0].get_colour())
+                self.eyebrow_r = self.canvas.create_polygon(self.eyebrow[1].get_size(), fill=self.eyebrow[0].get_colour())
+                time.sleep(0.2)
+                x = 0
+                y = 1.4
+                y2 = 1
+                for i in range(0, 51):
+                    time.sleep(0.01)
+                    self.canvas.move(self.eyelid_u_l, x, y)
+                    self.canvas.move(self.eyelid_u_r, x, y)
+                    self.canvas.move(self.eyebrow_l, x, y2)
+                    self.canvas.move(self.eyebrow_r, x, y2)
+                time.sleep(1)
+
+            if char == "x":
+                print "scared"
+                self.eyelid[0].set_size(paint.checkPaint(name, paint.load_file(name))[39])
+                self.eyelid[1].set_size(paint.checkPaint(name, paint.load_file(name))[44])
+                self.eyebrow[0].set_size(paint.checkPaint(name, paint.load_file(name))[99])
+                self.eyebrow[1].set_size(paint.checkPaint(name, paint.load_file(name))[104])
+                self.canvas.delete(self.eyelid_u_l)
+                self.canvas.delete(self.eyelid_u_r)
+                self.canvas.delete(self.eyebrow_l)
+                self.canvas.delete(self.eyebrow_r)
+                self.eyelid_u_l = self.canvas.create_polygon(self.eyelid[0].get_size(), fill=self.eyelid[0].get_colour())
+                self.eyelid_u_r = self.canvas.create_polygon(self.eyelid[1].get_size(), fill=self.eyelid[1].get_colour())
+                self.eyebrow_l = self.canvas.create_polygon (self.eyebrow[0].get_size(),fill=self.eyebrow[0].get_colour())
+                self.eyebrow_r = self.canvas.create_polygon(self.eyebrow[1].get_size(), fill=self.eyebrow[1].get_colour())
+                x = 0
+                y = 1.4
+                for i in range(0, 51):
+                    time.sleep(0.01)
+                    self.canvas.move(self.eye_l, x, -y)
+                    self.canvas.move(self.eye_r, x, -y)
+
+                    self.canvas.update()
+                time.sleep(1)
+
+            if char == "d":
+                print "disgust"
+                self.eyelid[2].set_size(paint.checkPaint(name, paint.load_file(name))[50])
+                self.eyelid[3].set_size(paint.checkPaint(name, paint.load_file(name))[55])
+                self.eyebrow[0].set_size(paint.checkPaint(name, paint.load_file(name))[100])
+                self.eyebrow[1].set_size(paint.checkPaint(name, paint.load_file(name))[105])
+                self.canvas.delete(self.eyelid_d_l)
+                self.canvas.delete(self.eyelid_d_r)
+                self.canvas.delete(self.eyebrow_l)
+                self.canvas.delete(self.eyebrow_r)
+                self.eyelid_d_l = self.canvas.create_polygon(self.eyelid[2].get_size(), fill=self.eyelid[2].get_colour())
+                self.eyelid_d_r = self.canvas.create_polygon(self.eyelid[3].get_size(), fill=self.eyelid[3].get_colour())
+                self.eyebrow_l = self.canvas.create_polygon (self.eyebrow[0].get_size(),fill=self.eyebrow[0].get_colour())
+                self.eyebrow_r = self.canvas.create_polygon(self.eyebrow[1].get_size(), fill=self.eyebrow[1].get_colour())
+                x = 0
+                y = 0.95
+                for i in range(0, 51):
+                    time.sleep(0.02)
                     self.canvas.move(self.eyelid_d_l, x, -y)
                     self.canvas.move(self.eyelid_d_r, x, -y)
                     self.canvas.update()
-                track = 1
-                time.sleep(0.1)
+                time.sleep(1)
+            char=getch.getch()
+            if char =="q":
+                "sal"
+                ending= False
 
-            else:
-                for i in range(0, 51):
-                    time.sleep(0.01)
-                    self.canvas.move(self.eyelid_u_l, x, -y)
-                    self.canvas.move(self.eyelid_u_r, x, -y)
-                    self.canvas.move(self.eyelid_d_l, x, y)
-                    self.canvas.move(self.eyelid_d_r, x, y)
-                    self.canvas.update()
-                track = 0
-                time.sleep(4)
-                if KeyboardInterrupt:
-                        change_state = False# limpiar buffer
-        #char = getch.getch()
 
-"""
-    def change_status(self, status):
-
-        if self.status == 'angry':
-            xy = [(60.2, -94.48), (218.16, -36.08), (188.96, 38.4), (40, -20)]
-            angryUle = self.canvas.create_polygon(xy, fill="black")  # Up|Left  eyelid
-            xy2 = [(291.04, 38.4), (440, -20), (410.8, -94.48), (261.84, -36.08)]
-            angryUre = self.canvas.create_polygon(xy2, fill="black")  # Up|Right  eyelid
-            angryDle = self.canvas.create_rectangle(40, 320, 200, 400, fill="black")  # Down|Left  eyelid
-            angryDre = self.canvas.create_rectangle(280, 320, 440, 400, fill="black")  # Down|Right eyelid
-            x = 0
-            y = 2.3
-            for i in range(0, 51):
-                time.sleep(0.01)
-                self.canvas.move(angryUle, x, y)
-                self.canvas.move(angryUre, x, y)
-                self.canvas.move(angryDle, x, -y)
-                self.canvas.move(angryDre, x, -y)
-                self.canvas.update()
-
-            if KeyboardInterrupt:
-                status = raw_input("What is the status of Learnbot?")
-                self.canvas.delete(angryUle)
-                self.canvas.delete(angryUre)
-                self.canvas.delete(angryDle)
-                self.canvas.delete(angryDre)
-                self.change_status(status)
-        self.status = "neutral"
-        for j in xrange(0,5):
-            xul=[]
-            yul=[]
-            xur=[]
-            yur=[]
-            xdl=[]
-            ydl=[]
-            xdr=[]
-            ydr=[]
-
-            for i in xrange(0,18):
-                xul.append(self.eyelid[0].get_size()[i][0])
-                yul.append(self.eyelid[0].get_size()[i][1]+((140-self.eyelid[0].get_size()[i][1])/2.5))
-                xur.append(self.eyelid[1].get_size()[i][0])
-                yur.append(self.eyelid[1].get_size()[i][1]+((140-self.eyelid[1].get_size()[i][1])/2.5))
-                xdl.append(self.eyelid[2].get_size()[i][0])
-                ydl.append(self.eyelid[2].get_size()[i][1]+((140-self.eyelid[2].get_size()[i][1])/2.5))
-                xdr.append(self.eyelid[3].get_size()[i][0])
-                ydr.append(self.eyelid[3].get_size()[i][1]+((140-self.eyelid[3].get_size()[i][1])/2.5))
-            for i in xrange(18,35):
-                xul.append(self.eyelid[0].get_size()[i][0])
-                yul.append(self.eyelid[0].get_size()[i][1])
-                xur.append(self.eyelid[1].get_size()[i][0])
-                yur.append(self.eyelid[1].get_size()[i][1])
-                xdl.append(self.eyelid[2].get_size()[i][0])
-                ydl.append(self.eyelid[2].get_size()[i][1])
-                xdr.append(self.eyelid[3].get_size()[i][0])
-                ydr.append(self.eyelid[3].get_size()[i][1])
-
-            res=zip(xul,yul)
-            res2 = zip(xur, yur)
-            res3=zip(xdl,ydl)
-            res4 = zip(xdr, ydr)
-
-            self.eyelid[0].set_size(res)
-            self.eyelid[1].set_size(res2)
-            self.eyelid[2].set_size(res3)
-            self.eyelid[3].set_size(res4)
-
-            time.sleep(1)
-
-            eyelid_u_l=self.canvas.create_polygon(self.eyelid[0].get_size(), fill=self.eyelid[0].get_colour())
-            eyelid_u_r = self.canvas.create_polygon(self.eyelid[1].get_size(), fill=self.eyelid[1].get_colour())
-            eyelid_d_l = self.canvas.create_polygon(self.eyelid[2].get_size(), fill=self.eyelid[2].get_colour())
-            eyelid_d_r = self.canvas.create_polygon(self.eyelid[3].get_size(), fill=self.eyelid[3].get_colour())
-
-            self.canvas.update()
-
-        time.sleep(3)
-
-"""
 
 def loadConfiguration(name):
     change= False
@@ -377,6 +486,7 @@ def loadConfiguration(name):
 
 if __name__ == "__main__":
     root = tk.Tk()
+    root.wm_attributes('-type','splash')
     end = False
     while end!=True:
         name = raw_input("How I look today (cozmo,oval,round)")
@@ -386,6 +496,7 @@ if __name__ == "__main__":
             print "Can you repeat, please?"
     loadConfiguration(name)
     face = Face(name)
+
     face.change_status()
     #root.attributes('-fullscreen', True)
     root.bind("<Escape>", lambda e: root.quit())
