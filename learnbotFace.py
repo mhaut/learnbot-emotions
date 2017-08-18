@@ -1,11 +1,13 @@
+from __future__ import print_function
 import Tkinter as tk
-import time
 import load_json as paint
 import load_configuration as lc
-import json
-# sudo pip install https://pypi.python.org/packages/source/g/getch/getch-1.0-python2.tar.gz#md5=586ea0f1f16aa094ff6a30736ba03c50
-import getch
-
+import readchar
+#sudo pip install readchar
+from termios import tcflush, TCIFLUSH
+import time, sys
+import queue
+import threading
 
 class BaseHead(object):
     def __init__(self):
@@ -76,6 +78,7 @@ class Face():
         self.eyelid = [EyeLid(), EyeLid(), EyeLid(), EyeLid()]
         self.mouth = Mouth()
         self.tongue = Tongue()
+        self.status = None
 
         self.canvas = tk.Canvas(width=480, height=320, background='black')
         self.canvas.pack()
@@ -147,17 +150,9 @@ class Face():
         self.mouth_ = self.canvas.create_polygon(self.mouth.get_size(), fill=self.mouth.get_colour())
         self.tongue_ = self.canvas.create_polygon(self.tongue.get_size(), fill=self.tongue.get_colour())
 
-        print "You can change status by pressing"
-        print " n    if you want the state to be neutral"
-        print " a    if you want the state to be angry"
-        print " h    if you want the state to be happiness"
-        print " s    if you want the state to be sadness"
-        print " x    if you want the state to be scared"
-        print " d    if you want the state to be disgust"
-        print " By default the state is neutral"
-
     def get_angry(self, name):
-        print "angry"
+        self.status = "angry"
+        print ("angry")
         self.eyelid[0].set_size(paint.checkPaint(name, paint.load_file(name))[36])
         self.eyelid[1].set_size(paint.checkPaint(name, paint.load_file(name))[41])
         self.eyebrow[0].set_size(paint.checkPaint(name, paint.load_file(name))[96])
@@ -179,9 +174,11 @@ class Face():
             self.canvas.move(self.eyebrow_l, x, y)
             self.canvas.move(self.eyebrow_r, x, y)
             self.canvas.update()
+        return self.status
+
 
     def clear_angry(self, name):
-        print "clear angry"
+        print ("clear angry")
         self.canvas.delete(self.eyelid_u_l)
         self.canvas.delete(self.eyelid_u_r)
         self.canvas.delete(self.eyebrow_l)
@@ -205,7 +202,8 @@ class Face():
                                                     fill=self.eyebrow[1].get_colour())
 
     def get_happy(self, name):
-        print "happiness"
+        self.status = "happiness"
+        print ("happiness")
         self.eyelid[2].set_size(paint.checkPaint(name, paint.load_file(name))[47])
         self.eyelid[3].set_size(paint.checkPaint(name, paint.load_file(name))[52])
         self.eyebrow[0].set_size(paint.checkPaint(name, paint.load_file(name))[97])
@@ -228,9 +226,11 @@ class Face():
             self.canvas.move(self.eyebrow_l, x, -y2)
             self.canvas.move(self.eyebrow_r, x, -y2)
             self.canvas.update()
+        return self.status
+
 
     def clear_happiness(self, name):
-        print "clear happy"
+        print ("clear happy")
         self.canvas.delete(self.eyelid_d_l)
         self.canvas.delete(self.eyelid_d_r)
         self.canvas.delete(self.eyebrow_l)
@@ -254,7 +254,8 @@ class Face():
                                                     fill=self.eyebrow[1].get_colour())
 
     def get_sad(self, name):
-        print "sadness"
+        self.status = "sadness"
+        print ("sadness")
         self.eyelid[0].set_size(paint.checkPaint(name, paint.load_file(name))[38])
         self.eyelid[1].set_size(paint.checkPaint(name, paint.load_file(name))[43])
         self.eyebrow[0].set_size(paint.checkPaint(name, paint.load_file(name))[98])
@@ -277,9 +278,11 @@ class Face():
             self.canvas.move(self.eyebrow_l, x, y2)
             self.canvas.move(self.eyebrow_r, x, y2)
             self.canvas.update()
+        return self.status
+
 
     def clear_sadness(self, name):
-        print "clear sadness"
+        print ("clear sadness")
         self.canvas.delete(self.eyelid_u_l)
         self.canvas.delete(self.eyelid_u_r)
         self.canvas.delete(self.eyebrow_l)
@@ -303,7 +306,8 @@ class Face():
                                                     fill=self.eyebrow[1].get_colour())
 
     def get_scared(self, name):
-        print "scared"
+        self.status = "scared"
+        print ("scared")
         self.eyelid[0].set_size(paint.checkPaint(name, paint.load_file(name))[39])
         self.eyelid[1].set_size(paint.checkPaint(name, paint.load_file(name))[44])
         self.eyebrow[0].set_size(paint.checkPaint(name, paint.load_file(name))[99])
@@ -323,9 +327,11 @@ class Face():
             self.canvas.move(self.eye_l, x, -y)
             self.canvas.move(self.eye_r, x, -y)
             self.canvas.update()
+        return self.status
+
 
     def clear_scared(self, name):
-        print "clear scared"
+        print ("clear scared")
         self.canvas.delete(self.eyelid_u_l)
         self.canvas.delete(self.eyelid_u_r)
         self.canvas.delete(self.eyebrow_l)
@@ -355,7 +361,8 @@ class Face():
             self.canvas.update()
 
     def get_disgust(self, name):
-        print "disgust"
+        self.status = "disgust"
+        print ("disgust")
         self.eyelid[2].set_size(paint.checkPaint(name, paint.load_file(name))[50])
         self.eyelid[3].set_size(paint.checkPaint(name, paint.load_file(name))[55])
         self.eyebrow[0].set_size(paint.checkPaint(name, paint.load_file(name))[100])
@@ -375,9 +382,11 @@ class Face():
             self.canvas.move(self.eyelid_d_l, x, -y)
             self.canvas.move(self.eyelid_d_r, x, -y)
             self.canvas.update()
+        return self.status
 
     def clear_disgust(self, name):
-        print "clear disgust"
+        self.status = "disgust"
+        print ("clear disgust")
         self.canvas.delete(self.eyelid_d_l)
         self.canvas.delete(self.eyelid_d_r)
         self.canvas.delete(self.eyebrow_l)
@@ -399,27 +408,55 @@ class Face():
                                                     fill=self.eyebrow[0].get_colour())
         self.eyebrow_r = self.canvas.create_polygon(self.eyebrow[1].get_size(),
                                                     fill=self.eyebrow[1].get_colour())
+        print("eeeeeeeeeeeeeeeeee")
 
     def change_status(self):
-        self.get_angry(name)
-        time.sleep(2)
-        self.clear_angry(name)
-        time.sleep(2)
-        self.get_happy(name)
-        time.sleep(2)
-        self.clear_happiness(name)
-        time.sleep(2)
-        self.get_sad(name)
-        time.sleep(2)
-        self.clear_sadness(name)
-        time.sleep(2)
-        self.get_scared(name)
-        time.sleep(2)
-        self.clear_scared(name)
-        time.sleep(2)
-        self.get_disgust(name)
-        time.sleep(2)
-        self.clear_disgust(name)
+        print ("You can change status by pressing")
+        print (" n    if you want the state to be neutral")
+        print (" a    if you want the state to be angry")
+        print (" h    if you want the state to be happiness")
+        print (" s    if you want the state to be sadness")
+        print (" x    if you want the state to be scared")
+        print (" d    if you want the state to be disgust")
+        print (" q    if you want exit")
+        print (" By default the state is neutral")
+
+        end = False
+        while end!=True:
+            tcflush(sys.stdin, TCIFLUSH)
+            char = readchar.readkey()
+            if self.status == "angry":
+                self.clear_angry(name)
+            if self.status == "happiness":
+                self.clear_happiness(name)
+            if self.status == "sadness":
+                self.clear_sadness(name)
+            if self.status == "scared":
+                self.clear_scared(name)
+            if self.status == "disgust":
+                self.clear_disgust(name)
+
+            print ("bucle")
+            if char == "a":
+                self.get_angry(name)
+
+            if char == "h":
+                self.get_happy(name)
+
+            if char == "s":
+                self.get_sad(name)
+
+            if char == "x":
+                self.get_scared(name)
+
+            if char == "d":
+                self.get_disgust(name)
+
+            if char == "q":
+                end = True
+                print ("end")
+                sys.exit(1)
+
 
         """
         print "entra change"

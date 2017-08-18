@@ -1,4 +1,6 @@
-import getch
+import readchar
+from termios import tcflush, TCIFLUSH
+import sys
 import load_json as paint
 
 
@@ -12,14 +14,13 @@ def loadConfiguration():
             print "Can you repeat, please?"
     change= False
     while change != True:
-        print "Do you want to change the default setting? (press y or n and enter)"
-        char = getch.getch()
+        print "Do you want to change the default setting? ( press y or n )"
+        char = readchar.readkey()
         if char == "y":
             end = False
             while end != True:
-                print "Have I eyebrows? (press y or n and enter)"
-                char = getch.getch()
-                char = getch.getch()
+                print "Have I eyebrows? ( press y or n )"
+                char = readchar.readkey()
                 if char == "y":
                     paint.create_part(name,"eyebrow_left")
                     paint.create_part(name, "eyebrow_right")
@@ -30,12 +31,12 @@ def loadConfiguration():
                     end = True
                 else:
                     print "Can you repeat, please?"
-                    char = getch.getch()
+                    tcflush(sys.stdin, TCIFLUSH)
             end = False
+            tcflush(sys.stdin, TCIFLUSH)
             while end!=True:
-                print "Have I iris? (press y or n and enter)"
-                char = getch.getch()
-                char = getch.getch()
+                print "Have I iris? ( press y or n and enter)"
+                char = readchar.readkey()
                 if char == "y":
                     paint.create_part(name,"iris_left")
                     paint.create_part(name, "iris_right")
@@ -46,11 +47,12 @@ def loadConfiguration():
                     end = True
                 else:
                     print "Can you repeat, please?"
+                    tcflush(sys.stdin, TCIFLUSH)
             end = False
+            tcflush(sys.stdin, TCIFLUSH)
             while end!=True:
-                print "Have I pupils? (press y or n and enter)"
-                char = getch.getch()
-                char = getch.getch()
+                print "Have I pupils? ( press y or n )"
+                char = readchar.readkey()
                 if char == "y":
                     paint.create_part(name,"pupil_left")
                     paint.create_part(name, "pupil_right")
@@ -61,12 +63,12 @@ def loadConfiguration():
                     end = True
                 else:
                     print "Can you repeat, please?"
-
+                    tcflush(sys.stdin, TCIFLUSH)
             end = False
+            tcflush(sys.stdin, TCIFLUSH)
             while end!=True:
-                print "Have I brightness in my eyes? (press y or n and enter)"
-                char = getch.getch()
-                char = getch.getch()
+                print "Have I brightness in my eyes? ( press y or n )"
+                char = readchar.readkey()
                 if char == "y":
                     paint.create_part(name,"reflex_pupil_left")
                     paint.create_part(name, "reflex_pupil_right")
@@ -77,12 +79,13 @@ def loadConfiguration():
                     end = True
                 else:
                     print "Can you repeat, please?"
-
+                    tcflush(sys.stdin, TCIFLUSH)
             end = False
+            tcflush(sys.stdin, TCIFLUSH)
+
             while end!=True:
-                print "Have I more brightness in my eyes? (press y or n and enter)"
-                char = getch.getch()
-                char = getch.getch()
+                print "Have I more brightness in my eyes? ( press y or n )"
+                char = readchar.readkey()
                 if char == "y":
                     paint.create_part(name, "reflex_pupil_left_2")
                     paint.create_part(name, "reflex_pupil_right_2")
@@ -93,12 +96,12 @@ def loadConfiguration():
                     end = True
                 else:
                     print "Can you repeat, please?"
-
+                    tcflush(sys.stdin, TCIFLUSH)
             end = False
+            tcflush(sys.stdin, TCIFLUSH)
             while end!=True:
                 print "Have I mouth? (press y or n)"
-                char = getch.getch()
-                char = getch.getch()
+                char = readchar.readkey()
                 if char == "y":
                     paint.create_part(name, "mouth")
                     paint.create_part(name, "tongue")
@@ -109,10 +112,15 @@ def loadConfiguration():
                     end = True
                 else:
                     print "Can you repeat, please?"
+                    tcflush(sys.stdin, TCIFLUSH)
+            end = False
+            tcflush(sys.stdin, TCIFLUSH)
             change=True
         elif char == "n":
             change=True
+            tcflush(sys.stdin, TCIFLUSH)
         else:
             print "Can you repeat, please?"
-            char = getch.getch()
+            tcflush(sys.stdin, TCIFLUSH)
     return name
+loadConfiguration()
