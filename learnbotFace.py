@@ -164,7 +164,7 @@ class Face():
         self.eyelid_u_l = self.canvas.create_polygon(self.eyelid[0].get_size(), fill=self.eyelid[0].get_colour())
         self.eyelid_u_r = self.canvas.create_polygon(self.eyelid[1].get_size(), fill=self.eyelid[1].get_colour())
         self.eyebrow_l = self.canvas.create_polygon(self.eyebrow[0].get_size(), fill=self.eyebrow[0].get_colour())
-        self.eyebrow_r = self.canvas.create_polygon(self.eyebrow[1].get_size(), fill=self.eyebrow[1].get_colour())
+        self.eyebrow_r = self.canvas.create_polygon(self.eyebrow[1].get_size(), fill=self.eyebrow[0].get_colour())
         x = 0
         y = 1.4
         for i in range(0, 51):
