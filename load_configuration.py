@@ -7,8 +7,8 @@ import load_json as paint
 def loadConfiguration():
     end = False
     while end!=True:
-        name = raw_input("How I look today (cozmo,oval,round)")
-        if name == "cozmo" or name == "oval" or name == "round":
+        name = raw_input("How I look today (cozmo,oval,round, base_head, base_emotions)")
+        if name == "cozmo" or name == "oval" or name == "round" or name == "base_head" or name == "base_emotions":
             end = True
         else:
             print "Can you repeat, please?"
