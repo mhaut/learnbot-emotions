@@ -123,4 +123,3 @@ def loadConfiguration():
             print "Can you repeat, please?"
             tcflush(sys.stdin, TCIFLUSH)
     return name
-loadConfiguration()

@@ -208,14 +208,19 @@ class Face():
         self.eyelid[3].set_size(paint.checkPaint(name, paint.load_file(name))[52])
         self.eyebrow[0].set_size(paint.checkPaint(name, paint.load_file(name))[97])
         self.eyebrow[1].set_size(paint.checkPaint(name, paint.load_file(name))[102])
+        self.mouth.set_size(paint.checkPaint(name, paint.load_file(name))[107])
         self.canvas.delete(self.eyelid_d_l)
         self.canvas.delete(self.eyelid_d_r)
         self.canvas.delete(self.eyebrow_l)
         self.canvas.delete(self.eyebrow_r)
+        self.canvas.delete(self.mouth_)
+        self.canvas.delete(self.tongue_)
         self.eyelid_d_l = self.canvas.create_polygon(self.eyelid[2].get_size(), fill=self.eyelid[2].get_colour())
         self.eyelid_d_r = self.canvas.create_polygon(self.eyelid[3].get_size(), fill=self.eyelid[3].get_colour())
         self.eyebrow_l = self.canvas.create_polygon(self.eyebrow[0].get_size(), fill=self.eyebrow[0].get_colour())
         self.eyebrow_r = self.canvas.create_polygon(self.eyebrow[1].get_size(), fill=self.eyebrow[1].get_colour())
+        self.mouth_ = self.canvas.create_polygon(self.mouth.get_size(), fill=self.mouth.get_colour())
+
         x = 0
         y = 0.95
         y2 = 0.2
@@ -235,6 +240,8 @@ class Face():
         self.canvas.delete(self.eyelid_d_r)
         self.canvas.delete(self.eyebrow_l)
         self.canvas.delete(self.eyebrow_r)
+        self.canvas.delete(self.mouth_)
+
         self.eyelid[2].set_size(paint.checkPaint(name, paint.load_file(name))[8])
         self.eyelid[2].set_colour(paint.checkPaint(name, paint.load_file(name))[9])
         self.eyelid[3].set_size(paint.checkPaint(name, paint.load_file(name))[10])
@@ -243,7 +250,10 @@ class Face():
         self.eyebrow[0].set_colour(paint.checkPaint(name, paint.load_file(name))[29])
         self.eyebrow[1].set_size(paint.checkPaint(name, paint.load_file(name))[30])
         self.eyebrow[1].set_colour(paint.checkPaint(name, paint.load_file(name))[31])
+        self.mouth.set_size(paint.checkPaint(name, paint.load_file(name))[32])
 
+        self.mouth_ = self.canvas.create_polygon(self.mouth.get_size(), fill=self.mouth.get_colour())
+        self.tongue_ = self.canvas.create_polygon(self.tongue.get_size(), fill=self.tongue.get_colour())
         self.eyelid_d_l = self.canvas.create_polygon(self.eyelid[2].get_size(),
                                                      fill=self.eyelid[2].get_colour())
         self.eyelid_d_r = self.canvas.create_polygon(self.eyelid[3].get_size(),
@@ -260,14 +270,18 @@ class Face():
         self.eyelid[1].set_size(paint.checkPaint(name, paint.load_file(name))[43])
         self.eyebrow[0].set_size(paint.checkPaint(name, paint.load_file(name))[98])
         self.eyebrow[1].set_size(paint.checkPaint(name, paint.load_file(name))[103])
+        self.mouth.set_size(paint.checkPaint(name, paint.load_file(name))[108])
         self.canvas.delete(self.eyelid_u_l)
         self.canvas.delete(self.eyelid_u_r)
         self.canvas.delete(self.eyebrow_l)
         self.canvas.delete(self.eyebrow_r)
+        self.canvas.delete(self.mouth_)
+        self.canvas.delete(self.tongue_)
         self.eyelid_u_l = self.canvas.create_polygon(self.eyelid[0].get_size(), fill=self.eyelid[0].get_colour())
         self.eyelid_u_r = self.canvas.create_polygon(self.eyelid[1].get_size(), fill=self.eyelid[1].get_colour())
         self.eyebrow_l = self.canvas.create_polygon(self.eyebrow[0].get_size(), fill=self.eyebrow[0].get_colour())
         self.eyebrow_r = self.canvas.create_polygon(self.eyebrow[1].get_size(), fill=self.eyebrow[1].get_colour())
+        self.mouth_ = self.canvas.create_polygon(self.mouth.get_size(), fill=self.mouth.get_colour())
         x = 0
         y = 1.4
         y2 = 1
@@ -287,6 +301,7 @@ class Face():
         self.canvas.delete(self.eyelid_u_r)
         self.canvas.delete(self.eyebrow_l)
         self.canvas.delete(self.eyebrow_r)
+        self.canvas.delete(self.mouth_)
         self.eyelid[0].set_size(paint.checkPaint(name, paint.load_file(name))[4])
         self.eyelid[0].set_colour(paint.checkPaint(name, paint.load_file(name))[5])
         self.eyelid[1].set_size(paint.checkPaint(name, paint.load_file(name))[6])
@@ -295,7 +310,10 @@ class Face():
         self.eyebrow[0].set_colour(paint.checkPaint(name, paint.load_file(name))[29])
         self.eyebrow[1].set_size(paint.checkPaint(name, paint.load_file(name))[30])
         self.eyebrow[1].set_colour(paint.checkPaint(name, paint.load_file(name))[31])
+        self.mouth.set_size(paint.checkPaint(name, paint.load_file(name))[32])
 
+        self.mouth_ = self.canvas.create_polygon(self.mouth.get_size(), fill=self.mouth.get_colour())
+        self.tongue_ = self.canvas.create_polygon(self.tongue.get_size(), fill=self.tongue.get_colour())
         self.eyelid_u_l = self.canvas.create_polygon(self.eyelid[0].get_size(),
                                                      fill=self.eyelid[0].get_colour())
         self.eyelid_u_r = self.canvas.create_polygon(self.eyelid[1].get_size(),
@@ -312,14 +330,19 @@ class Face():
         self.eyelid[1].set_size(paint.checkPaint(name, paint.load_file(name))[44])
         self.eyebrow[0].set_size(paint.checkPaint(name, paint.load_file(name))[99])
         self.eyebrow[1].set_size(paint.checkPaint(name, paint.load_file(name))[104])
+        self.mouth.set_size(paint.checkPaint(name, paint.load_file(name))[109])
         self.canvas.delete(self.eyelid_u_l)
         self.canvas.delete(self.eyelid_u_r)
         self.canvas.delete(self.eyebrow_l)
         self.canvas.delete(self.eyebrow_r)
+        self.canvas.delete(self.mouth_)
+        self.canvas.delete(self.tongue_)
         self.eyelid_u_l = self.canvas.create_polygon(self.eyelid[0].get_size(), fill=self.eyelid[0].get_colour())
         self.eyelid_u_r = self.canvas.create_polygon(self.eyelid[1].get_size(), fill=self.eyelid[1].get_colour())
         self.eyebrow_l = self.canvas.create_polygon(self.eyebrow[0].get_size(), fill=self.eyebrow[0].get_colour())
         self.eyebrow_r = self.canvas.create_polygon(self.eyebrow[1].get_size(), fill=self.eyebrow[1].get_colour())
+        self.mouth_ = self.canvas.create_polygon(self.mouth.get_size(), fill=self.mouth.get_colour())
+
         x = 0
         y = 1.4
         for i in range(0, 51):
@@ -336,6 +359,7 @@ class Face():
         self.canvas.delete(self.eyelid_u_r)
         self.canvas.delete(self.eyebrow_l)
         self.canvas.delete(self.eyebrow_r)
+        self.canvas.delete(self.mouth_)
         self.eyelid[0].set_size(paint.checkPaint(name, paint.load_file(name))[4])
         self.eyelid[0].set_colour(paint.checkPaint(name, paint.load_file(name))[5])
         self.eyelid[1].set_size(paint.checkPaint(name, paint.load_file(name))[6])
@@ -344,7 +368,10 @@ class Face():
         self.eyebrow[0].set_colour(paint.checkPaint(name, paint.load_file(name))[29])
         self.eyebrow[1].set_size(paint.checkPaint(name, paint.load_file(name))[30])
         self.eyebrow[1].set_colour(paint.checkPaint(name, paint.load_file(name))[31])
+        self.mouth.set_size(paint.checkPaint(name, paint.load_file(name))[32])
 
+        self.mouth_ = self.canvas.create_polygon(self.mouth.get_size(), fill=self.mouth.get_colour())
+        self.tongue_ = self.canvas.create_polygon(self.tongue.get_size(), fill=self.tongue.get_colour())
         self.eyelid_u_l = self.canvas.create_polygon(self.eyelid[0].get_size(),
                                                      fill=self.eyelid[0].get_colour())
         self.eyelid_u_r = self.canvas.create_polygon(self.eyelid[1].get_size(),
@@ -367,14 +394,19 @@ class Face():
         self.eyelid[3].set_size(paint.checkPaint(name, paint.load_file(name))[55])
         self.eyebrow[0].set_size(paint.checkPaint(name, paint.load_file(name))[100])
         self.eyebrow[1].set_size(paint.checkPaint(name, paint.load_file(name))[105])
+        self.mouth.set_size(paint.checkPaint(name, paint.load_file(name))[110])
         self.canvas.delete(self.eyelid_d_l)
         self.canvas.delete(self.eyelid_d_r)
         self.canvas.delete(self.eyebrow_l)
         self.canvas.delete(self.eyebrow_r)
+        self.canvas.delete(self.mouth_)
+        self.canvas.delete(self.tongue_)
         self.eyelid_d_l = self.canvas.create_polygon(self.eyelid[2].get_size(), fill=self.eyelid[2].get_colour())
         self.eyelid_d_r = self.canvas.create_polygon(self.eyelid[3].get_size(), fill=self.eyelid[3].get_colour())
         self.eyebrow_l = self.canvas.create_polygon(self.eyebrow[0].get_size(), fill=self.eyebrow[0].get_colour())
         self.eyebrow_r = self.canvas.create_polygon(self.eyebrow[1].get_size(), fill=self.eyebrow[1].get_colour())
+        self.mouth_ = self.canvas.create_polygon(self.mouth.get_size(), fill=self.mouth.get_colour())
+
         x = 0
         y = 0.95
         for i in range(0, 51):
@@ -391,6 +423,7 @@ class Face():
         self.canvas.delete(self.eyelid_d_r)
         self.canvas.delete(self.eyebrow_l)
         self.canvas.delete(self.eyebrow_r)
+        self.canvas.delete(self.mouth_)
         self.eyelid[0].set_size(paint.checkPaint(name, paint.load_file(name))[8])
         self.eyelid[0].set_colour(paint.checkPaint(name, paint.load_file(name))[9])
         self.eyelid[1].set_size(paint.checkPaint(name, paint.load_file(name))[10])
@@ -399,7 +432,10 @@ class Face():
         self.eyebrow[0].set_colour(paint.checkPaint(name, paint.load_file(name))[29])
         self.eyebrow[1].set_size(paint.checkPaint(name, paint.load_file(name))[30])
         self.eyebrow[1].set_colour(paint.checkPaint(name, paint.load_file(name))[31])
+        self.mouth.set_size(paint.checkPaint(name, paint.load_file(name))[32])
 
+        self.mouth_ = self.canvas.create_polygon(self.mouth.get_size(), fill=self.mouth.get_colour())
+        self.tongue_ = self.canvas.create_polygon(self.tongue.get_size(), fill=self.tongue.get_colour())
         self.eyelid_u_l = self.canvas.create_polygon(self.eyelid[0].get_size(),
                                                      fill=self.eyelid[0].get_colour())
         self.eyelid_u_r = self.canvas.create_polygon(self.eyelid[1].get_size(),
@@ -408,7 +444,6 @@ class Face():
                                                     fill=self.eyebrow[0].get_colour())
         self.eyebrow_r = self.canvas.create_polygon(self.eyebrow[1].get_size(),
                                                     fill=self.eyebrow[1].get_colour())
-        print("eeeeeeeeeeeeeeeeee")
 
     def change_status(self):
         print ("You can change status by pressing")
@@ -497,84 +532,7 @@ class Face():
                     if self.char == "a" or self.char == "h" or self.char == "s" or self.char=="x" or self.char == "d" or self.char == "n":
                         change_state = False
 
-
-            if self.char == "s":
-                print "sadness"
-                self.eyelid[0].set_size(paint.checkPaint(name, paint.load_file(name))[38])
-                self.eyelid[1].set_size(paint.checkPaint(name, paint.load_file(name))[43])
-                self.eyebrow[0].set_size(paint.checkPaint(name, paint.load_file(name))[98])
-                self.eyebrow[1].set_size(paint.checkPaint(name, paint.load_file(name))[103])
-                self.canvas.delete(self.eyelid_u_l)
-                self.canvas.delete(self.eyelid_u_r)
-                self.canvas.delete(self.eyebrow_l)
-                self.canvas.delete(self.eyebrow_r)
-                self.eyelid_u_l = self.canvas.create_polygon(self.eyelid[0].get_size(), fill=self.eyelid[1].get_colour())
-                self.eyelid_u_r = self.canvas.create_polygon(self.eyelid[1].get_size(), fill=self.eyelid[1].get_colour())
-                self.eyebrow_l = self.canvas.create_polygon (self.eyebrow[0].get_size(),fill=self.eyebrow[0].get_colour())
-                self.eyebrow_r = self.canvas.create_polygon(self.eyebrow[1].get_size(), fill=self.eyebrow[0].get_colour())
-                time.sleep(0.2)
-                x = 0
-                y = 1.4
-                y2 = 1
-                for i in range(0, 51):
-                    time.sleep(0.01)
-                    self.canvas.move(self.eyelid_u_l, x, y)
-                    self.canvas.move(self.eyelid_u_r, x, y)
-                    self.canvas.move(self.eyebrow_l, x, y2)
-                    self.canvas.move(self.eyebrow_r, x, y2)
-
-
-
-            if self.char == "x":
-                print "scared"
-                self.eyelid[0].set_size(paint.checkPaint(name, paint.load_file(name))[39])
-                self.eyelid[1].set_size(paint.checkPaint(name, paint.load_file(name))[44])
-                self.eyebrow[0].set_size(paint.checkPaint(name, paint.load_file(name))[99])
-                self.eyebrow[1].set_size(paint.checkPaint(name, paint.load_file(name))[104])
-                self.canvas.delete(self.eyelid_u_l)
-                self.canvas.delete(self.eyelid_u_r)
-                self.canvas.delete(self.eyebrow_l)
-                self.canvas.delete(self.eyebrow_r)
-                self.eyelid_u_l = self.canvas.create_polygon(self.eyelid[0].get_size(), fill=self.eyelid[0].get_colour())
-                self.eyelid_u_r = self.canvas.create_polygon(self.eyelid[1].get_size(), fill=self.eyelid[1].get_colour())
-                self.eyebrow_l = self.canvas.create_polygon (self.eyebrow[0].get_size(),fill=self.eyebrow[0].get_colour())
-                self.eyebrow_r = self.canvas.create_polygon(self.eyebrow[1].get_size(), fill=self.eyebrow[1].get_colour())
-                x = 0
-                y = 1.4
-                for i in range(0, 51):
-                    time.sleep(0.01)
-                    self.canvas.move(self.eye_l, x, -y)
-                    self.canvas.move(self.eye_r, x, -y)
-
-                    self.canvas.update()
-                time.sleep(1)
-
-            if self.char == "d":
-                print "disgust"
-                self.eyelid[2].set_size(paint.checkPaint(name, paint.load_file(name))[50])
-                self.eyelid[3].set_size(paint.checkPaint(name, paint.load_file(name))[55])
-                self.eyebrow[0].set_size(paint.checkPaint(name, paint.load_file(name))[100])
-                self.eyebrow[1].set_size(paint.checkPaint(name, paint.load_file(name))[105])
-                self.canvas.delete(self.eyelid_d_l)
-                self.canvas.delete(self.eyelid_d_r)
-                self.canvas.delete(self.eyebrow_l)
-                self.canvas.delete(self.eyebrow_r)
-                self.eyelid_d_l = self.canvas.create_polygon(self.eyelid[2].get_size(), fill=self.eyelid[2].get_colour())
-                self.eyelid_d_r = self.canvas.create_polygon(self.eyelid[3].get_size(), fill=self.eyelid[3].get_colour())
-                self.eyebrow_l = self.canvas.create_polygon (self.eyebrow[0].get_size(),fill=self.eyebrow[0].get_colour())
-                self.eyebrow_r = self.canvas.create_polygon(self.eyebrow[1].get_size(), fill=self.eyebrow[1].get_colour())
-                x = 0
-                y = 0.95
-                for i in range(0, 51):
-                    time.sleep(0.02)
-                    self.canvas.move(self.eyelid_d_l, x, -y)
-                    self.canvas.move(self.eyelid_d_r, x, -y)
-                    self.canvas.update()
-                time.sleep(1)
-            self.char=getch.getch()
-            if self.char =="q":
-                "sal"
-                ending= False"""
+"""
 
 
 if __name__ == "__main__":
